@@ -1,0 +1,76 @@
+<?php 
+$form = $this->form;
+$form->prepare();
+$form->setAttribute('action', $this->url(NULL, array('controller'=>'Index', 'action' => 'index')));
+$form->setAttribute('novalidate','true');
+$form->setAttribute('method', 'post');
+?>
+	
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<?php if ($user = $this->identity()) {?>
+			<div class="panel panel-default">
+				<div class="panel-heading">My dashboard</div>
+				<div class="panel-body"></div>
+			</div>	
+			<?php }else{?>
+			<div class="panel panel-default">
+				<div class="panel-heading">Login</div>
+				<div class="panel-body">
+					
+					<?php echo $this->form()->openTag($form);?>
+						<input type="hidden" value="kL0TwHRh2mDLWaL8xdpnQALEWOVSbImZPXy1oqKu" name="_token">
+						<div class="flash-message">
+						<?php 
+						if(count($flashMessages)) : ?>
+						    <?php foreach ($flashMessages as $msg) : ?>
+						    <div class="alert alert-warning">
+						  		<?php echo $msg; ?>
+							</div>
+						    <?php endforeach; ?>
+						<?php endif; ?></div>
+						<div class="form-group">
+							<label class="col-md-4 control-label"><?php echo $this->formLabel($form->get('email')); ?></label>
+							<div class="col-md-6">
+								<?php 
+								    echo $this->formElement($form->get('email'));
+								    echo $this->formElementErrors($form->get('email'));
+								?>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-4 control-label"><?php echo $this->formLabel($form->get('password')); ?></label>
+							<div class="col-md-6">
+								<?php 
+								    echo $this->formElement($form->get('password'));
+								    echo $this->formElementErrors($form->get('password'));
+								?>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-md-6 col-md-offset-4">
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="remember"> Remember Me
+									</label>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-md-6 col-md-offset-4">
+								<?php 
+								    echo $this->formElement($form->get('submit'));
+								    echo $this->formElementErrors($form->get('submit'));
+								?>
+								
+							</div>
+						</div>
+					<?php echo $this->form()->closeTag() ?>
+				</div>
+			</div>
+			<?php }?>
+		</div>
+	</div>

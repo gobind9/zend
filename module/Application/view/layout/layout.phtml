@@ -1,0 +1,93 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                        ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+        				->prependStylesheet($this->basePath('css/datepicker.css'))
+                        ->prependStylesheet($this->basePath('css/font-awesome.min.css')) ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+        	->prependFile($this->basePath('js/bootstrap-datepicker.js'))
+        	->prependFile($this->basePath('js/script.js'))
+            ->prependFile($this->basePath('js/bootstrap.min.js'))
+            ->prependFile($this->basePath('js/jquery.min.js'))
+            
+            ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
+        ; ?>
+		
+	<style>
+		.form-group ul{ margin: 5px 0 0; padding: 0;}
+		.form-group ul li{list-style:none; color:red; font-size:12px;}
+	</style>
+	
+    </head>
+    <body>
+
+		<nav class="navbar navbar-default">
+		<div class="container">
+			<div class="navbar-header">
+	
+				<!-- Collapsed Hamburger -->
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#app-navbar-collapse">
+					<span class="sr-only">Toggle Navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+	
+				<!-- Branding Image -->
+				<a class="navbar-brand" href="/"> ZF2 </a>
+			</div>
+	
+			<div class="collapse navbar-collapse" id="app-navbar-collapse">
+				<!-- Left Side Of Navbar -->
+				<ul class="nav navbar-nav">
+					<li><a href="/application/index/index">Home</a></li>
+					<?php $user = $this->identity();
+						if ($user && $user['user_type'] == 0) { ?>
+						
+					<li><a href="/application/user/index">Users</a></li>
+					<li><a href="/application/customer/index">Customers</a></li>
+					<li><a href="/application/product/index">Products</a></li>
+					<li><a href="/application/customer/customerorder">Orders</a></li>
+					<?php }else if($user && $user['user_type'] == 1){?>
+					
+					<li><a href="/application/product/addtocart">Products</a></li>
+					<li><a href="/application/customer/customerorder/<?php echo $user['id']?>">Orders</a></li>
+					<li><a href="/application/product/createorder">New Order</a></li>
+					<?php }?>	
+				</ul>
+	
+				<!-- Right Side Of Navbar -->
+				<ul class="nav navbar-nav navbar-right">
+					<!-- Authentication Links -->
+					<?php if ($user = $this->identity()) {?>
+					<li><a href="/application/index/logout">Logout</a></li>
+					<?php }else{?>
+					<li><a href="/application/index">Login</a></li>
+					<?php }?>
+				</ul>
+			</div>
+		</div>
+		</nav>
+		
+		<!-- end .flash-message -->
+		<div class="container-fluid">
+			<?php echo $this->content; ?>
+		</div>
+
+        <?php echo $this->inlineScript() ?>
+    </body>
+</html>

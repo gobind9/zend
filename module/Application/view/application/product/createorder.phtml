@@ -1,0 +1,61 @@
+<div class="flash-message">
+<?php if(count($flashMessages)) : ?>
+    <?php foreach ($flashMessages as $msg) : ?>
+    <div class="alert alert-warning">
+  		<?php echo $msg; ?>
+	</div>
+    <?php endforeach; ?>
+<?php endif; ?></div>
+<!-- end .flash-message -->
+<h1>Asergis Products</h1>
+<hr>
+<form method="POST" action="/application/product/creditcheck" accept-charset="UTF-8" id="orderform">
+	
+
+	<?php $user = $this->identity();?>
+	<div style="float: right; padding: 0 20px 0 0">My credits: <?php echo $user['credit_limit'];?></div>
+	<table class="table table-striped table-bordered table-hover">
+		<thead>
+			<tr class="bg-info">
+				<th>#</th>
+				<th>Product Name</th>
+				<th>Unit of Measure</th>
+				<th>Price</th>
+				<th>Quantity</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php if(count($cartData)){?>
+			<?php $i=0;foreach($cartData as $data){?>
+			<tr>
+				<td><?php echo ++$i;?>
+				<input id="pid_<?php echo $data['pid']?>" name="pid[]" value="<?php echo $data['pid']?>" type="hidden">
+				<input name="orderline[]" value="<?php echo $data['id']?>" type="hidden">
+				</td>
+				<td><?php echo $data['name']?></td>
+				<td><?php echo $data['unit_name']?></td>
+
+				<td id="qty_<?php echo $data['pid']?>"><?php echo $data['price_per_unit']?></td>
+				<td><input class="form-control" style="width: 40px;" id="<?php echo $data['pid']?>" name="qty_in_stock_<?php echo $data['pid']?>" value="<?php echo $data['qty']?>" type="text"></td>
+				<td>
+					<input class="btn btn-danger" value="Delete" type="button" onclick="window.location.href='/application/product/deletefromcard/<?php echo $data['id']?>'" />
+				</td>
+			</tr>
+			<?php }?>			
+			<tr class="bg-info">
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td><strong>Total</strong></td>
+				<td id="totalamt"><strong>0</strong></td>
+				<td align="right"><input class="btn btn-danger" value="Cancel Order" type="button" onclick="window.location.href='/application/product/deletecart'"></td>
+				<td><input class="btn btn-success" value="Save Order" type="submit"></td>
+			</tr>
+			<?php }else{?>
+			<tr class="bg-info"><td colspan="6" align="center">You do not have any item in your cart!!!!</td></tr>
+			<?php }?>
+		</tbody>
+	</table>
+</form>
+
+
